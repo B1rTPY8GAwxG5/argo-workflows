@@ -37,6 +37,7 @@ func TestReadinessHandler_NotReady(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/readyz", nil)
 	rr := httptest.NewRecorder()
 	c.ReadinessHandler()(rr, req)
+	// 503 is returned when the checker has not yet been marked ready
 	assert.Equal(t, http.StatusServiceUnavailable, rr.Code)
 }
 
@@ -63,5 +64,6 @@ func TestLivenessHandler_Unhealthy(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/healthz", nil)
 	rr := httptest.NewRecorder()
 	c.LivenessHandler()(rr, req)
+	// 500 is returned when the checker is marked unhealthy (e.g. after a fatal error)
 	assert.Equal(t, http.StatusInternalServerError, rr.Code)
 }
