@@ -22,4 +22,7 @@
 //	GET /healthz  — liveness probe (200 OK / 500 Internal Server Error)
 //	GET /readyz   — readiness probe (200 OK / 503 Service Unavailable)
 //	GET /status   — JSON status object
+//
+// Note: /status is unauthenticated by design; avoid exposing sensitive
+// runtime details in its response payload.
 package health
