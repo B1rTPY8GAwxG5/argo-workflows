@@ -25,4 +25,8 @@
 //
 // Note: /status is unauthenticated by design; avoid exposing sensitive
 // runtime details in its response payload.
+//
+// Personal note: consider adding a /version endpoint in the future that
+// returns build metadata (git commit, build date) for easier debugging
+// in multi-replica deployments.
 package health
