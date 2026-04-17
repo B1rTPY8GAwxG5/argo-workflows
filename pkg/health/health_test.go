@@ -39,6 +39,8 @@ func TestReadinessHandler_NotReady(t *testing.T) {
 	c.ReadinessHandler()(rr, req)
 	// 503 is returned when the checker has not yet been marked ready
 	assert.Equal(t, http.StatusServiceUnavailable, rr.Code)
+	// also verify the response body is not empty so clients get a useful message
+	assert.NotEmpty(t, rr.Body.String())
 }
 
 func TestReadinessHandler_Ready(t *testing.T) {
@@ -66,4 +68,6 @@ func TestLivenessHandler_Unhealthy(t *testing.T) {
 	c.LivenessHandler()(rr, req)
 	// 500 is returned when the checker is marked unhealthy (e.g. after a fatal error)
 	assert.Equal(t, http.StatusInternalServerError, rr.Code)
+	// also verify the response body is not empty so clients get a useful message
+	assert.NotEmpty(t, rr.Body.String())
 }
