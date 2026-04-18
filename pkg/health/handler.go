@@ -43,6 +43,8 @@ func LivenessHandler(c *Checker) http.HandlerFunc {
 			return
 		}
 		// Use 503 so load balancers automatically stop routing traffic here.
+		// Also set a Retry-After header to hint clients to back off for 5 seconds.
+		w.Header().Set("Retry-After", "5")
 		w.WriteHeader(http.StatusServiceUnavailable)
 		_, _ = w.Write([]byte("not healthy"))
 	}
