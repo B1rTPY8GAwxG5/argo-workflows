@@ -58,4 +58,6 @@ func TestLivenessHandler_WhenUnhealthy(t *testing.T) {
 
 	assert.Equal(t, http.StatusServiceUnavailable, rec.Code)
 	assert.Equal(t, "not healthy", rec.Body.String())
+	// also verify the liveness counter is incremented even on unhealthy responses
+	assert.Equal(t, int64(1), c.metrics.LivenessChecks)
 }
