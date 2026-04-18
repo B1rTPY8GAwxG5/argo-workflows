@@ -21,6 +21,8 @@ func newMetrics() *Metrics {
 	return &Metrics{
 		startTime:     now,
 		LastReadyTime: now,
+		// initialise LastHealthyTime so it's never a zero value
+		LastHealthyTime: now,
 	}
 }
 
