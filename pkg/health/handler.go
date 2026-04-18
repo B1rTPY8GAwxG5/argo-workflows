@@ -33,6 +33,7 @@ func MetricsHandler(c *Checker) http.HandlerFunc {
 
 // LivenessHandler returns an http.HandlerFunc for liveness probes.
 // It records each check in the metrics and returns 200 when healthy, 503 otherwise.
+// Note: returning a plain-text body on failure helps with quick curl debugging.
 func LivenessHandler(c *Checker) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		c.metrics.RecordLiveness()
@@ -41,6 +42,7 @@ func LivenessHandler(c *Checker) http.HandlerFunc {
 			_, _ = w.Write([]byte("OK"))
 			return
 		}
+		// Use 503 so load balancers automatically stop routing traffic here.
 		w.WriteHeader(http.StatusServiceUnavailable)
 		_, _ = w.Write([]byte("not healthy"))
 	}
