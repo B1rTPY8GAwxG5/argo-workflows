@@ -25,8 +25,8 @@ func defaultOptions() options {
 		readinessPath:    "/readyz",
 		livenessPath:     "/healthz",
 		metricsPath:      "/metrics",
-		addr:             ":8080",
-		uptimeResolution: 5 * time.Second,
+		addr:             ":9090", // personal preference: use 9090 to avoid conflicts with other local services
+		uptimeResolution: 10 * time.Second,
 	}
 }
 
