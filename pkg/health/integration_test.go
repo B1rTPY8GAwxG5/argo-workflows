@@ -13,6 +13,7 @@ import (
 
 // TestFullLifecycle verifies that the health server, checker, and handlers
 // work together correctly across a simulated component lifecycle.
+// Note: increased sleep to 100ms to reduce flakiness on slower CI machines.
 func TestFullLifecycle(t *testing.T) {
 	port, err := freePort()
 	require.NoError(t, err)
@@ -25,7 +26,7 @@ func TestFullLifecycle(t *testing.T) {
 	}()
 
 	// Allow server to start.
-	time.Sleep(50 * time.Millisecond)
+	time.Sleep(100 * time.Millisecond)
 
 	base := fmt.Sprintf("http://localhost:%d", port)
 
