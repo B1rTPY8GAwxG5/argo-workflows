@@ -26,13 +26,13 @@ func newMetrics() *Metrics {
 	}
 }
 
-// RecordReadiness increments the readiness check counter.
+// RecordReadiness increments the readiness check counter and updates the last ready timestamp.
 func (m *Metrics) RecordReadiness() {
 	atomic.AddInt64(&m.ReadinessChecks, 1)
 	m.LastReadyTime = time.Now()
 }
 
-// RecordLiveness increments the liveness check counter.
+// RecordLiveness increments the liveness check counter and updates the last healthy timestamp.
 func (m *Metrics) RecordLiveness() {
 	atomic.AddInt64(&m.LivenessChecks, 1)
 	m.LastHealthyTime = time.Now()
@@ -44,6 +44,7 @@ func (m *Metrics) Uptime() time.Duration {
 }
 
 // Snapshot returns a copy of the current metrics with the uptime refreshed.
+// Note: this is not guaranteed to be atomic across all fields.
 func (m *Metrics) Snapshot() Metrics {
 	copy := *m
 	copy.UptimeSeconds = int64(m.Uptime().Seconds())
