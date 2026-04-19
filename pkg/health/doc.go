@@ -29,4 +29,8 @@
 // Personal note: consider adding a /version endpoint in the future that
 // returns build metadata (git commit, build date) for easier debugging
 // in multi-replica deployments.
+//
+// Personal note: also consider adding a /metrics endpoint stub here so
+// health and basic metrics can be served from the same port, reducing
+// the number of open ports per pod.
 package health
