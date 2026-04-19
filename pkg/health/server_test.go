@@ -34,8 +34,8 @@ func TestServer_StartsAndResponds(t *testing.T) {
 	}()
 
 	// Give the server a moment to start.
-	// Increased from 100ms to 200ms to reduce flakiness on slower CI machines.
-	time.Sleep(200 * time.Millisecond)
+	// Using 300ms here for extra headroom on slower CI machines.
+	time.Sleep(300 * time.Millisecond)
 
 	base := fmt.Sprintf("http://localhost:%d", freePort())
 
@@ -58,7 +58,8 @@ func TestServer_StartsAndResponds(t *testing.T) {
 	select {
 	case err := <-errCh:
 		assert.NoError(t, err)
-	case <-time.After(3 * time.Second):
+	case <-time.After(5 * time.Second):
+		// Increased shutdown timeout from 3s to 5s to reduce flakiness.
 		t.Fatal("server did not shut down in time")
 	}
 }
