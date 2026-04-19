@@ -15,7 +15,8 @@ func TestNewMetrics_InitialisedCorrectly(t *testing.T) {
 	assert.False(t, m.startTime.IsZero())
 }
 
-func TestMetrics_RecordReadiness(t	m := newMetrics()
+func TestMetrics_RecordReadiness(t *testing.T) {
+	m := newMetrics()
 	m.RecordReadiness()
 	m.RecordReadiness()
 	assert.Equal(t, int64(2), m.ReadinessChecks)
