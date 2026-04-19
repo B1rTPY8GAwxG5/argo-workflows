@@ -34,7 +34,8 @@ func TestServer_StartsAndResponds(t *testing.T) {
 	}()
 
 	// Give the server a moment to start.
-	time.Sleep(100 * time.Millisecond)
+	// Increased from 100ms to 200ms to reduce flakiness on slower CI machines.
+	time.Sleep(200 * time.Millisecond)
 
 	base := fmt.Sprintf("http://localhost:%d", freePort())
 
